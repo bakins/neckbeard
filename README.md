@@ -133,6 +133,10 @@ Similar Projects
 * [beaver](https://github.com/josegonzalez/beaver)
 * [logstash forwarder](https://github.com/elasticsearch/logstash-forwarder)
 
+Implementation
+--------------
+Neckbeard is written in go. 
+
 
 LICENSE
 -------
