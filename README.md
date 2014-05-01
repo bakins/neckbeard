@@ -140,7 +140,7 @@ Neckbeard is written in go.
 
 LICENSE
 -------
-Copyright (c) 2014, Brian Akins
+Copyright (c) 2014, Brian Akins, Wilson Wise
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
