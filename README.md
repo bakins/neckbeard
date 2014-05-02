@@ -1,11 +1,11 @@
 Neckbeard
 ==========
 
-Neckbeard is log forwarded intended to be used for logstash. It can take a "log stream" from a variety of inputs, transform through them through external "pipes", wrap each event in the logstash json format, and send to redis servers.
+Neckbeard is log forwarded intended to be used for logstash. It can take a "log stream" from a variety of inputs, transform it through external "pipes", wrap each event in the logstash json format, and send it to redis servers.
 
 Motivation
 ----------
-We could do the various transforms on the logstash servers, but we had issues with large numbers of servers.  Neckbeard allows us to push the task of getting the log events into proper json format to the servers them selves.
+We could do the various transforms on the logstash servers, but we have issues with large numbers of servers.  Neckbeard allows us to push the task of getting the log events into proper json format to the servers themselves.
 
 Status
 ------
@@ -22,8 +22,8 @@ Neckbeard can have one and only one input at this time. Run multiple instances f
 
 * `-file <path/to/file>` - read from a file in a manner like `tail -F`
 * `-port <port>` - listen on a tcp port and read log events line-by-line
-* `-stdin` - read log enevts from STDIN
-* `-exec "<path/to/program/with/args>"` - execute a program and read from its STDOUT. Any messages from STDERR will simple be written to the STDERR of neckbeard.  Neckbeard will manage the process and restart it if it fails, etc.
+* `-stdin` - read log events from STDIN (This is the default if no option is given)
+* `-exec "<path/to/program/with/args>"` - execute a program and read from its STDOUT. Any messages from STDERR will simply be written to the STDERR of neckbeard.  Neckbeard will manage the process and restart it if it fails, etc.
 
 One, and only one, input may be used at this time. Neckbeard will exit with an error if this is not the case.
 
@@ -47,19 +47,21 @@ Currently, Neckbeard can only output to a redis list. It will loadbalance betwee
 * `-redis-timer <time>` - if given, neckbeard will collect logs and attempt to send to redis every `<time>` seconds in a batch form. If not given neckbeard sends messages one by one. **Not yet implemented**
 * `-redis-batch-size <num> - if `-redis-timer` is used, this is the maximum number of messages to send in a redis batch. Defaults to 64. **Not yet implemented**
 
+* `-stdout` - This is default.  This sends json events to standard out.  This is useful for debugging or piping to another tool.
+
 ## Tags ##
 
 You can add tags that will be added to the `@tags` field of the output.
 
 * `-tag <tag>` - can be used multiple times
 
-Additionally, if the field `tags` is an array in the json event, these will also be added to `@tags` before forwarding to logstah.
+Additionally, if the field `tags` is an array in the json event, these will also be added to `@tags` before forwarding to logstash.
 
 ## Source ##
 
 The logstash source can be set.
 
-* `-source <source>` - sets `@source`. defaults to `neckbeard:<inputtype:<inputarg>`
+* `-source <source>` - sets `@source`. defaults to `neckbeard:<inputtype>:<inputarg>`
 
 ## Type ##
 
@@ -79,7 +81,7 @@ Logstash requires a specific timestamp format (iso8601).  Most programs log in t
 
 Neckbeard can provide statistics in json via HTTP.
 
-* `-http-stats <port>` - listen on this port and provide statistics including buffer lengths, process health, events processed, etc.
+* `-http-stats <port>` - listen on this port and provide statistics including buffer lengths, process health, events processed, latency, etc.
 
 ## Tuning ##
 Various tuning options
@@ -88,7 +90,7 @@ Various tuning options
 
 ## Examples ##
 
-`neckbeard -file /var/log/nginx/access.log -time-field request_field -time-layout "Mon, 2 Jan 2006 15:04:05 -0700 -t my_site -redis 127.0.0.1:6379` - this will read from `/var/log/nginx/access.log`, which is assumed to already be in json. The timestamp is in the field `request_field`. The tag `my_site` will be added to the output.
+`neckbeard -file /var/log/nginx/access.log -time-field request\_field -time-layout "Mon, 2 Jan 2006 15:04:05 -0700 -t my\_site -redis 127.0.0.1:6379` - this will read from `/var/log/nginx/access.log`, which is assumed to already be in json. The timestamp is in the field `request\_field`. The tag `my\_site` will be added to the output.
 
 The event in the file will look like (presented on multiple lines for clarity)
 
