@@ -90,7 +90,7 @@ Various tuning options
 
 ## Examples ##
 
-`neckbeard -file /var/log/nginx/access.log -time-field request\_field -time-layout "Mon, 2 Jan 2006 15:04:05 -0700 -t my\_site -redis 127.0.0.1:6379` - this will read from `/var/log/nginx/access.log`, which is assumed to already be in json. The timestamp is in the field `request\_field`. The tag `my\_site` will be added to the output.
+`neckbeard -file /var/log/nginx/access.log -time-field request_field -time-layout "Mon, 2 Jan 2006 15:04:05 -0700 -t my_site -redis 127.0.0.1:6379` - this will read from `/var/log/nginx/access.log`, which is assumed to already be in json. The timestamp is in the field `request_field`. The tag `my_site` will be added to the output.
 
 The event in the file will look like (presented on multiple lines for clarity)
 
