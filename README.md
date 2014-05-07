@@ -49,6 +49,10 @@ Currently, Neckbeard can only output to a redis list. It will loadbalance betwee
 
 * `-stdout` - This is default.  This sends json events to standard out.  This is useful for debugging or piping to another tool.
 
+## Sampling ##
+
+* `-sample <samplepercent>` - Only sample X percentage of the logs (can be percentage) [default: 100]
+
 ## Tags ##
 
 You can add tags that will be added to the `@tags` field of the output.
